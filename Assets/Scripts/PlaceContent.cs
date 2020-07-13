@@ -10,9 +10,19 @@ public class PlaceContent : MonoBehaviour {
     public ARRaycastManager raycastManager;
     public GraphicRaycaster raycaster;
 
-    private void Update() {
+    bool wasDoubleTouch;
 
-        if (Input.GetMouseButtonDown(0) && !IsClickOverUI()) {
+    void Update() {
+
+        if (Input.GetMouseButtonDown(0)) {
+            wasDoubleTouch = false;
+        }
+
+        if (Input.GetMouseButtonDown(1)) {
+            wasDoubleTouch = true;
+        }
+
+        if (Input.GetMouseButtonUp(0) && !IsClickOverUI() && !wasDoubleTouch) {
         
             List<ARRaycastHit> hitPoints = new List<ARRaycastHit>();
             raycastManager.Raycast(Input.mousePosition, hitPoints, TrackableType.Planes);
